@@ -2,8 +2,8 @@
 =========================================================
 Name        : lab6_exe_D.html
 Assignment  : Lab 6, Exercise D
-Author(s)   : Mahdi Ansari, William Arthur Philip Louis
-Submission  : May 21, 2030
+Author(s)   : Qasim Amar
+Submission  : February 28, 2024
 Description : API Usage.
 =========================================================
 -->
@@ -47,12 +47,39 @@ Description : API Usage.
     <script>
         // Function to fetch and display students
         async function fetchStudents() {
-            
-        }
+    const response = await fetch('https://65dfdc14ff5e305f32a34b82.mockapi.io/students');
+    const students = await response.json();
+    studentList.innerHTML = '';
+
+    students.forEach(function(student) {
+        const listItem = document.createElement('li');
+        listItem.textContent = student.name;
+
+        listItem.onclick = function() {
+            fetchCourses(student.id);
+        };
+
+        studentList.appendChild(listItem);
+    });
+}
+
+// Call fetchStudents on window load
+window.onload = fetchStudents;
+
 
         // Function to fetch and display courses for a student
         async function fetchCourses(studentId) {
-            
+            const response = await fetch(`https://65dfdc14ff5e305f32a34b82.mockapi.io/students/${studentId}/courses`);
+            const courses = await response.json();
+            courseList.innerHTML = '';
+
+        
+            courses.forEach(function(course) {
+  
+            var listItem = document.createElement('li');
+            listItem.textContent = course.name + ' - ' + course.unit;
+            courseList.appendChild(listItem);
+});
         }
 
         // Fetch students on window load
